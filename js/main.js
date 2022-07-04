@@ -54,6 +54,34 @@
     updateStatistics();
   };
 
+  let getPecas = () => {
+    return document.querySelectorAll(".controle-ajuste");
+  };
+
+  let setMechaValue = (event) => {
+    const types = event.target.dataset;
+    let targ;
+    if (types.minus) {
+      const operation = "minus";
+      const where = types.minus;
+      targ = document.querySelector(`[data-parte=${where}]`);
+      if (parseInt(targ.value, 10) > 0)
+        targ.value = (parseInt(targ.value) - 1).toString();
+    }
+    if (types.plus) {
+      const operation = "plus";
+      const where = types.plus;
+      targ = document.querySelector(`[data-parte=${where}]`);
+      if (parseInt(targ.value, 10) >= 0)
+        targ.value = (parseInt(targ.value) + 1).toString();
+    }
+  };
+
+  const botoes = getPecas();
+  botoes.forEach((botao) => {
+    botao.addEventListener("click", setMechaValue);
+  });
+
   let updateStatistics = () => {
     estatiticas = {
       forca: getForca(),
@@ -63,8 +91,4 @@
     };
   };
   updateStatistics();
-
-  console.log(estatiticas);
-  setPoder(400);
-  console.log(estatiticas);
 })();
